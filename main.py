@@ -1,4 +1,4 @@
-import uvicorn
+# import uvicorn
 import redis.asyncio as redis
 
 from pathlib import Path
@@ -27,9 +27,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR = Path(".")
+# BASE_DIR = Path(".")
+# app.mount("/static", StaticFiles(directory=BASE_DIR / "src" / "static"), name="static")
 
-app.mount("/static", StaticFiles(directory=BASE_DIR / "src" / "static"), name="static")
+BASE_DIR = Path(__file__).parent
+directory = BASE_DIR.joinpath("src").joinpath("static")
+app.mount("/static", StaticFiles(directory=directory), name="static")
 
 app.include_router(auth.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
@@ -64,6 +67,13 @@ def index(request: Request):
 
 @app.get("/api/healthchecker")
 async def healthchecker(db: AsyncSession = Depends(get_db)):
+    """
+    Health Checker
+
+    :param db: database session
+    :return: health status
+    :rtype: dict
+    """
     try:
         # Make request
         result = await db.execute(text("SELECT 1"))

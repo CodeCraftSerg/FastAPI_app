@@ -26,8 +26,26 @@ fastapi-limiter = "^0.1.6"
 jinja2 = "^3.1.3"
 cloudinary = "^1.39.1"
 bcrypt = "^4.1.2"
+pytest = "^8.1.1"
+httpx = "^0.27.0"
 
+
+[tool.poetry.group.dev.dependencies]
+sphinx = "^7.2.6"
+
+
+[tool.poetry.group.test.dependencies]
+aiosqlite = "^0.20.0"
+pytest-asyncio = "^0.23.6"
+httpx = "^0.27.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+testpaths = [
+    "tests", ]
+pythonpath = "."
+filterwarnings = "ignore::DeprecationWarning"

@@ -23,6 +23,15 @@ conf = ConnectionConfig(
 
 
 async def send_email(email: EmailStr, username: str, host: str):
+    """
+    The send_email function sends an email to the user with a link to verify their email address.
+
+    :param email: EmailStr: Specify the email address to send the message to
+    :param username: str: Pass the username to the template
+    :param host: str: Generate the link for the user to confirm their email
+    :return: A coroutine object
+    :doc-author: Trelent
+    """
     try:
         token_verification = auth_service.create_email_token({"sub": email})
         message = MessageSchema(
